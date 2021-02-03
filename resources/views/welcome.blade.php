@@ -1,6 +1,6 @@
 @extends('app.master')
 
-@section('title','logins page')
+@section('title','loginsas page')
 
 @section('scrips')
     <script> src="/js/index.js"</script>
