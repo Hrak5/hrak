@@ -2,6 +2,8 @@
 
 @section('title','logins pages')
 
+@section('title','login page')
+
 @section('scrips')
     <script> src="/js/index.js"</script>
 @endsection
