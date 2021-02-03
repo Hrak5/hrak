@@ -3,7 +3,7 @@
 
 @section('title','logins pages')
 
-@section('title','loginsas page')
+@section('title','login page')
 
 
 @section('scrips')
