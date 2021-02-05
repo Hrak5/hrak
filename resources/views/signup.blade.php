@@ -2,6 +2,8 @@
 
 @section('content')
 
+@include('messages')
+
 <form action="/registr" method="post">
 	@csrf
 	<div>

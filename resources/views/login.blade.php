@@ -1,5 +1,6 @@
 @section('content')
 	<h1>login</h1>
+@include('messages')
 	<form action="/login" method="post">
 		@include('sidebar')
 		<input type="hidden" name="_token" value="{{ csrf_token() }}" />
