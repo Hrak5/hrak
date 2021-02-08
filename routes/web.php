@@ -6,17 +6,13 @@ use Illuminate\Http\Request;
 
 use App\Http\Controllers\UserController;
 
-// Route::get('/', function () {
-//     return view('welcome');
-// });
-
 Route::get('/',[UserController::class,'index']);
 
 // Route::get('/login', function () {
 //     return view('login');
 // });
 
-Route::get('/login', [UserController::class,'login']);
+Route::get('/login', [UserController::class,'login'])->name('login');
 
 // Route::get('/login', function () {
 
@@ -29,12 +25,6 @@ Route::get('/login', [UserController::class,'login']);
 //     ]);
 // });
 
-
-// Route::post('/login', function () {
-//     dd(1);
-// });
-
-
 // Route::get('user/{id}', function ($id) {
 // 	dd($id);
 // });
@@ -45,14 +35,19 @@ Route::get('/login', [UserController::class,'login']);
 // 	dd($request->get('email'));
 // });
 
-Route::post('/login',[UserController::class,'signIn']);
+Route::post('/login',[UserController::class,'signIn'])->name('post-login');
 
-Route::get('/signup',[UserController::class,'signup']);
+Route::get('/signup',[UserController::class,'signup'])->name('signup');
 
 Route::post('/registr',[UserController::class,'registr']);
 
-use App\Models\User;
-Route::get('/test',function(){
+Route::get('/profile',[UserController::class,'profile'])->name('profile')->middleware('checkUserAuth');
+
+Route::post('/logout',[UserController::class,'logout'])->name('logout')->middleware('checkUserAuth');
+
+
+// use App\Models\User;
+// Route::get('/test',function(){
 	
 	// $users = User::get();
 
@@ -96,7 +91,4 @@ Route::get('/test',function(){
 
 	// $user = User::whereAge(26)->first();
 	// dd($user);
-
-
-
-});
+// });

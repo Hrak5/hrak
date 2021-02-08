@@ -1,5 +1,7 @@
 <ul>
-    <li> <a href="#">Home</a></li>
-    <li> <a href="/login">news</a></li>
-    <li> <a href="/signup">about</a></li>
+    <li> <a href="/">Home</a></li>
+    @if(!Auth::check())
+    <li> <a href="{{route('login')}}}">login</a></li>
+    <li> <a href="{{route('signup')}}">sign up</a></li>
+    @endif
 </ul>

@@ -9,8 +9,12 @@ use Illuminate\Support\facades\Auth;
 class UserController extends Controller
 {
     public function login(){
-    	return view('login');
+        if (Auth::check()) {
+        return redirect()->route('profile');
+    } else {
+        return view('login');
     }
+}
     public function index(){
     	$arr = [
     		[ 'name' => 'john',
@@ -30,9 +34,9 @@ class UserController extends Controller
         ]);
         // dd($validated);
         if (Auth::attempt($validated)) {
-            dd('login');
+            return redirect()->route('profile');
         } else{
-            return redirect('/login')->with('error','invalid email or password');
+            return redirect()->route('login')->with('error','invalid email or password');
         }
     }
 
@@ -50,6 +54,27 @@ class UserController extends Controller
         // $data = $request->only(['name','email','age','password']);
         $validated['password'] = bcrypt($validated['password']);
         User::create($validated);
-        return redirect('/login');
+        return redirect()->route('login');
+    }
+
+    public function profile(){
+        // $user = Auth::user();
+        // dd($user);
+        return view('profile',['user' => Auth::user()]);
+    }
+
+    public function logout(){
+        Auth::logout();
+        return redirect()->route('login');
     }
 }
+
+ // public function profile(){
+ //        // $user = Auth::user();
+ //        // dd($user);
+ //        if(Auth::check()){
+ //            return view('profile',['user' => Auth::user()]);
+ //        } else {
+ //            return redirect('/login');
+ //        }
+ //    }
