@@ -6,6 +6,8 @@ use Illuminate\Http\Request;
 
 use App\Http\Controllers\UserController;
 
+use App\Http\Controllers\PostController;
+
 Route::get('/',[UserController::class,'index']);
 
 // Route::get('/login', function () {
@@ -41,9 +43,17 @@ Route::get('/signup',[UserController::class,'signup'])->name('signup');
 
 Route::post('/registr',[UserController::class,'registr']);
 
-Route::get('/profile',[UserController::class,'profile'])->name('profile')->middleware('checkUserAuth');
+Route::group(['middleware' => ['checkUserAuth']],function(){
 
-Route::post('/logout',[UserController::class,'logout'])->name('logout')->middleware('checkUserAuth');
+Route::get('/profile',[UserController::class,'profile'])->name('profile');
+
+Route::post('/logout',[UserController::class,'logout'])->name('logout');
+
+Route::get('posts',[PostController::class,'create'])->name('post-create');
+
+Route::post('/posts',[PostController::class,'store'])->name('store-posts');
+
+});
 
 
 // use App\Models\User;

@@ -5,6 +5,9 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\facades\Auth;
+use App\Models\Post;
+use App\Http\Requests\UserRegisterRequest;
+use App\Http\Requests\UserSignInRequest;
 
 class UserController extends Controller
 {
@@ -27,11 +30,8 @@ class UserController extends Controller
     return view('welcome',['users' => $arr]);
     }
 
-    public function signIn(request $request){
-        $validated = $request->validate([
-            'email' => 'required',
-            'password' => 'required'
-        ]);
+    public function signIn(UserSignInRequest $request){
+        $validated = $request->validated();
         // dd($validated);
         if (Auth::attempt($validated)) {
             return redirect()->route('profile');
@@ -44,13 +44,8 @@ class UserController extends Controller
         return view('signup');
     }
 
-    public function registr(request $request){
-        $validated = $request->validate([
-            'name' => 'required|string|max:16',
-            'email' => 'required|unique:users,email',
-            'age' => 'required|numeric|max:100',
-            'password' => 'required|min:6',
-        ]);
+    public function registr(UserRegisterRequest $request){
+        $validated = $request->validated();
         // $data = $request->only(['name','email','age','password']);
         $validated['password'] = bcrypt($validated['password']);
         User::create($validated);
@@ -60,7 +55,10 @@ class UserController extends Controller
     public function profile(){
         // $user = Auth::user();
         // dd($user);
-        return view('profile',['user' => Auth::user()]);
+        $posts = post::where('user_id',Auth::user()->id)->with('user')->get();
+        // $p = $posts[0];
+        // dd($p->user);
+        return view('profile',['user' => Auth::user(),'posts' => $posts]);
     }
 
     public function logout(){
@@ -68,13 +66,3 @@ class UserController extends Controller
         return redirect()->route('login');
     }
 }
-
- // public function profile(){
- //        // $user = Auth::user();
- //        // dd($user);
- //        if(Auth::check()){
- //            return view('profile',['user' => Auth::user()]);
- //        } else {
- //            return redirect('/login');
- //        }
- //    }
