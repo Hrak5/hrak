@@ -49,6 +49,10 @@ Route::get('/profile',[UserController::class,'profile'])->name('profile');
 
 Route::post('/logout',[UserController::class,'logout'])->name('logout');
 
+Route::get('me/edit',[UserController::class,'edit'])->name('user.edit');
+
+Route::post('me/edit',[UserController::class,'update'])->name('user.update');
+
 Route::get('posts',[PostController::class,'create'])->name('post-create');
 
 Route::post('/posts',[PostController::class,'store'])->name('store-posts');

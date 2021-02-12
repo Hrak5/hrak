@@ -32,7 +32,6 @@ class UserController extends Controller
 
     public function signIn(UserSignInRequest $request){
         $validated = $request->validated();
-        // dd($validated);
         if (Auth::attempt($validated)) {
             return redirect()->route('profile');
         } else{
@@ -45,17 +44,14 @@ class UserController extends Controller
     }
 
     public function registr(UserRegisterRequest $request){
-        $validated = $request->validated();
-        // $data = $request->only(['name','email','age','password']);
-        $validated['password'] = bcrypt($validated['password']);
-        User::create($validated);
+        User::create($request->validated());
         return redirect()->route('login');
     }
 
     public function profile(){
-        // $user = Auth::user();
-        // dd($user);
         $posts = post::where('user_id',Auth::user()->id)->with('user')->get();
+        // $user  = User::first();
+        // dd($user->birth_year); // dd($user->name);
         // $p = $posts[0];
         // dd($p->user);
         return view('profile',['user' => Auth::user(),'posts' => $posts]);
@@ -64,5 +60,33 @@ class UserController extends Controller
     public function logout(){
         Auth::logout();
         return redirect()->route('login');
+    }
+
+    public function edit(){
+        return view('user-edit',[
+            'user' => Auth::user()
+        ]);
+    }
+
+    public function update(request $request){
+        $validated = $request->validate([
+            'name' => 'nullable|min:3|max:16',
+            'password' => 'nullable|min:6',
+            'image' => 'nullable|image|max:2048'
+        ]);
+        // dd($request->all());
+        $validated = array_filter($validated,function($value){
+            return !empty($value);
+        });
+        // dd($validated);
+        Auth::user()->update($validated);
+         if ($request->hasfile('image')) {
+            $imageName = $request->file('image')->store('images');
+            // dd($imageName);
+            Auth::user()->profile_image = $imageName;
+            Auth::user()->save();
+            // dd(Auth::user());
+        }
+        return redirect()->route('profile');
     }
 }
