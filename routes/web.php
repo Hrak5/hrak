@@ -8,6 +8,8 @@ use App\Http\Controllers\UserController;
 
 use App\Http\Controllers\PostController;
 
+use Illuminate\Support\Facades\Storage;
+
 Route::get('/',[UserController::class,'index']);
 
 // Route::get('/login', function () {
@@ -56,6 +58,14 @@ Route::post('me/edit',[UserController::class,'update'])->name('user.update');
 Route::get('posts',[PostController::class,'create'])->name('post-create');
 
 Route::post('/posts',[PostController::class,'store'])->name('store-posts');
+
+Route::get('me/profile-image',[UserController::class,'getProfileImage'])->name('user.profile-image');
+
+// Route::get('me/profile_image',function(){
+
+// return response()->file(Storage::path(\Auth::user()->profile_image));
+
+// })->name('user.profile');
 
 });
 

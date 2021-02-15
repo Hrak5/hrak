@@ -13,7 +13,7 @@
                     </figure>
                     <div class="cover-body d-flex justify-content-between align-items-center">
                         <div>
-                            <img class="profile-pic" src="https://bootdey.com/img/Content/avatar/avatar6.png" alt="profile">
+                            <img class="profile-pic" src="{{route('user.profile-image')}}" alt="profile">
                             <span class="profile-name">{{$user->name}}</span>
                         </div>
                         <div class="d-none d-md-block">
