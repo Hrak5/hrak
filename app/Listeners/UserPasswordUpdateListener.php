@@ -7,7 +7,7 @@ use Illuminate\Queue\InteractsWithQueue;
 use App\Events\UserPasswordUpdateEvent;
 use Log;
 
-class UserPasswordUpdateListener
+class UserPasswordUpdateListener implements ShouldQueue
 {
     /**
      * Create the event listener.
@@ -28,7 +28,7 @@ class UserPasswordUpdateListener
     public function handle(UserPasswordUpdateEvent $event)
     {
         // dd($event->user);
-        log::info('USER_PASSWORD_UPDATE',[
+        Log::info('USER_PASSWORD_UPDATE',[
             'id' => $event->user->id, 
             'user_email' => $event->user->email,
             'user_name' => $event->user->name,
