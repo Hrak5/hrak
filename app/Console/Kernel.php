@@ -27,11 +27,9 @@ class Kernel extends ConsoleKernel
     protected function schedule(Schedule $schedule)
     {
         // $schedule->command('inspire')->hourly();
-        $schedule->call(function(){
-            User::where('updated_at','<', Carbon::now()->subDays(30))->delete();
-        })->hourly();
+        $schedule->command(DeleteOldUsers::class)->daily();
     }
-
+    
     /**
      * Register the commands for the application.
      *
