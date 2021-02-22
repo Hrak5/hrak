@@ -61,6 +61,16 @@ Route::post('/posts',[PostController::class,'store'])->name('store-posts');
 
 Route::get('me/profile-image',[UserController::class,'getProfileImage'])->name('user.profile-image');
 
+// Route::get('test',function(){
+// 	$arr = [
+// 		'name' => 'asdas'
+// 	];
+// });
+
+// inserting updating delete ge group find  eloquent getting started
+
+
+
 // Route::get('me/profile_image',function(){
 
 // return response()->file(Storage::path(\Auth::user()->profile_image));

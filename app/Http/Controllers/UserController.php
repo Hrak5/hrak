@@ -10,6 +10,7 @@ use App\Http\Requests\UserRegisterRequest;
 use App\Http\Requests\UserSignInRequest;
 use Illuminate\Support\Facades\Storage;
 use App\Services\UserService;
+use App\Constants\ClientResponse;
 
 
 class UserController extends Controller
@@ -84,5 +85,22 @@ class UserController extends Controller
     }
         public function getProfileImage(){
             return response()->file(Storage::path(Auth::user()->profile_image));
+    }
+
+    public function apiStore(UserRegisterRequest $request){
+
+        $user = User::create($request->validated());
+
+        return response()->json([
+            'status' => ClientResponse::STATUSES['success'],
+            'data' => $user
+        ]);
+    }
+
+    public function getUser($userId){
+        return response()->json([
+            'status' => ClientResponse::STATUSES['success'],
+            'data' => User::find($userId),
+        ]);
     }
 }
