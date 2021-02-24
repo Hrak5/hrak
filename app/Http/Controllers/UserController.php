@@ -11,6 +11,7 @@ use App\Http\Requests\UserSignInRequest;
 use Illuminate\Support\Facades\Storage;
 use App\Services\UserService;
 use App\Constants\ClientResponse;
+use Illuminate\Support\Facades\Http;
 
 
 class UserController extends Controller
@@ -102,5 +103,17 @@ class UserController extends Controller
             'status' => ClientResponse::STATUSES['success'],
             'data' => User::find($userId),
         ]);
+    }
+
+    public function apiLogin(Request $request){
+    $response = Http::asForm()->post('http://hrak.loc/oauth/token', [
+        'grant_type' => 'password',
+        'client_id' => 2,
+        'client_secret' => env('PASSPORT_PASSWORD_SECRET'),
+        'username' => $request->email,
+        'password' => $request->password,
+        'scope' => '',
+    ]);
+    return $response->json();
     }
 }

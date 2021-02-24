@@ -23,6 +23,14 @@
                                     <path d="M18.5 2.5a2.121 2.121 0 0 1 3 3L12 15l-4 1 1-4 9.5-9.5z"></path>
                                 </svg> Edit profile
                             </a>
+                            <div class="row">
+                                <div class="col-md-12">
+                                     <form action="{{route('logout')}}" method="post">
+                                        @csrf
+                                        <input type="submit" class="btn btn-primary" value="logout">
+                                     </form>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

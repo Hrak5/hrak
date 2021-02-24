@@ -2,6 +2,7 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use Illuminate\Support\Facades\Http;
 
 /*
 |--------------------------------------------------------------------------
@@ -22,6 +23,15 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 Route::post('users',[UserController::class,'apiStore']);
 
 Route::get('users/{id}',[UserController::class,'getUser']);
+
+Route::post('Login',[UserController::class,'apiLogin']);
+
+Route::get('user',function(){
+	dd(\Auth::user());
+	// return response()->json
+})->middleware('auth:api');
+
+//127.0.0.1:8000
 
 // route::get('users',function(){
 // 	return response()->json(\App\Models\User::all());
