@@ -115,5 +115,6 @@ class UserController extends Controller
         'scope' => '',
     ]);
     return $response->json();
+    // env('APP_URL').
     }
 }

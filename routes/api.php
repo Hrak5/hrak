@@ -15,6 +15,7 @@ use Illuminate\Support\Facades\Http;
 |
 */
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\PostController;
 
 Route::middleware('auth:api')->get('/user', function (Request $request) {
     return $request->user();
@@ -22,16 +23,16 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 
 Route::post('users',[UserController::class,'apiStore']);
 
-Route::get('users/{id}',[UserController::class,'getUser']);
-
 Route::post('Login',[UserController::class,'apiLogin']);
 
-Route::get('user',function(){
-	dd(\Auth::user());
-	// return response()->json
-})->middleware('auth:api');
+Route::group(['middleware' => ['auth:api']], function(){
 
-//127.0.0.1:8000
+	Route::get('users/{id}',[UserController::class,'getUser']);
+
+	Route::patch('posts/{post}/Likes',[PostController::class,'apiUpdateLikes']);
+	
+	Route::get('posts/{post}/Likes',[PostController::class,'apiGetLikes']);
+});
 
 // route::get('users',function(){
 // 	return response()->json(\App\Models\User::all());

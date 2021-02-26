@@ -22,4 +22,28 @@ class PostController extends Controller
    		// dd($post);
    		return redirect()->route('profile');
    }
+
+   public function apiUpdateLikes(Post $post){
+      // dd(Auth::user());
+      $post->Likes()->syncWithoutDetaching(Auth::user()->id);
+      return response()->json([
+         'status' => 1
+      ]);
+   }
+
+   public function apiGetLikes(Post $post){
+
+      // $u = User::find(0);     for browser
+      // Auth::login($u);
+      $post->load('Likes');
+      $emails = $post->Likes->pluck('email');
+
+      return response()->json([
+         'status' => 1,
+         'data' => [
+            'count' => $post->Likes->count(),
+            'users' => $emails
+         ]
+      ]);
+   }
 }
