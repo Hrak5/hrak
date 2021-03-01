@@ -31,6 +31,13 @@
                                      </form>
                                 </div>
                             </div>
+                            <div class="form-control">
+                                <div class="row">
+                                    <div class="col-md-12">
+                                        <a href="{{route('post-create')}}" class="btn btn-info">new post</a>
+                                    </div>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

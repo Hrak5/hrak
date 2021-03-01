@@ -12,6 +12,7 @@ use Illuminate\Support\Facades\Storage;
 use App\Services\UserService;
 use App\Constants\ClientResponse;
 use Illuminate\Support\Facades\Http;
+// use Illuminate\\App;
 
 
 class UserController extends Controller
@@ -24,6 +25,7 @@ class UserController extends Controller
     }
 }
     public function index(){
+        // App:setLocale('ru');
     	$arr = [
     		[ 'name' => 'john',
     			'age' => 21
@@ -116,5 +118,16 @@ class UserController extends Controller
     ]);
     return $response->json();
     // env('APP_URL').
+    }
+
+    public function getLikedPosts(){
+        Auth::user()->load('LikedPosts');
+        return response()->json([
+            'status' => 1,
+            'data' => [
+                'count' => Auth::user()->LikedPosts->count(),
+                'posts' => Auth::user()->LikedPosts->pluck('data')
+            ]
+        ]);
     }
 }

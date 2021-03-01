@@ -62,4 +62,9 @@ class User extends Authenticatable
     public function getJoinedDateAttribute(){
         return date('M, d Y',strtotime($this->created_at));
     }
+
+    public function LikedPosts(){
+        return $this->belongsToMany(
+            post::class,'user_post_likes','user_id','post_id')->withTimestamps();
+    }
 }
